@@ -29,7 +29,14 @@ class CashDispenser
 end
 
 class Account
-  def balance
+  attr_reader :balance
+
+  def initialize(balance)
+    @balance = balance
+  end
+
+  def debit(amount)
+    @balance -= amount
   end
 end
 
@@ -39,15 +46,18 @@ class Teller
   end
 
   def authenticate_as(account)
+    @account = account
   end
 
   def withdraw(amount)
+    @account.debit(amount)
     @cash_dispenser.dispense(amount)
   end
 end
 
 module DomainDriver
   def create_account(balance)
+    @my_account = Account.new(balance)
   end
 
   def withdraw(amount)
@@ -60,13 +70,13 @@ module DomainDriver
   end
 
   def my_account
-    Account.new
+    @my_account || raise("Please call #create_account first!")
   end
 
   private
 
   def teller
-    Teller.new(cash_dispenser)
+    @teller ||= Teller.new(cash_dispenser)
   end
 end
 
