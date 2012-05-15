@@ -11,7 +11,7 @@ When /^I withdraw (#{AMOUNT})$/ do |amount|
 end
 
 Then /^(#{AMOUNT}) should be dispensed$/ do |amount|
-  cash_dispenser.contents.should == amount
+  cash_dispenser.last_amount_dispensed.should == amount
 end
 
 Then /^the balance of my account should be (#{AMOUNT})$/ do |amount|
@@ -19,14 +19,30 @@ Then /^the balance of my account should be (#{AMOUNT})$/ do |amount|
 end
 
 class CashDispenser
-  def contents
-    50
+  def dispense(amount)
+    @last_amount_dispensed = amount
+  end
+
+  def last_amount_dispensed
+    @last_amount_dispensed || raise("I am empty!")
   end
 end
 
 class Account
   def balance
-    450
+  end
+end
+
+class Teller
+  def initialize(cash_dispenser)
+    @cash_dispenser = cash_dispenser
+  end
+
+  def authenticate_as(account)
+  end
+
+  def withdraw(amount)
+    @cash_dispenser.dispense(amount)
   end
 end
 
@@ -35,14 +51,22 @@ module DomainDriver
   end
 
   def withdraw(amount)
+    teller.authenticate_as(my_account)
+    teller.withdraw(amount)
   end
 
   def cash_dispenser
-    CashDispenser.new
+    @cash_dispenser ||= CashDispenser.new
   end
 
   def my_account
     Account.new
+  end
+
+  private
+
+  def teller
+    Teller.new(cash_dispenser)
   end
 end
 
