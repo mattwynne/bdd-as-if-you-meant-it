@@ -1,4 +1,4 @@
-require_relative '../../lib/atm'
+require_relative '../../lib/otto'
 
 class FakeCashDispenser
   def dispense(amount)

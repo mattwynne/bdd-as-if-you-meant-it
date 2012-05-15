@@ -45,3 +45,8 @@ class Otto
   end
 end
 
+require 'sinatra'
+
+get '/' do
+  'Moi, olen Otto'
+end
