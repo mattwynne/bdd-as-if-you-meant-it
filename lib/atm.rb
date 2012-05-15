@@ -1,3 +1,22 @@
+class Money
+
+  def initialize(amount)
+    @amount = amount
+  end
+
+  def -(other_money)
+    Money.new(@amount - other_money.amount)
+  end
+
+  def ==(other_money)
+    @amount == other_money.amount
+  end
+
+  protected
+
+  attr_reader :amount
+end
+
 class Account
   attr_reader :balance
 
@@ -6,11 +25,11 @@ class Account
   end
 
   def debit(amount)
-    @balance -= amount
+    @balance = @balance - amount
   end
 end
 
-class Teller
+class Otto
   def initialize(cash_dispenser)
     @cash_dispenser = cash_dispenser
   end
@@ -20,6 +39,7 @@ class Teller
   end
 
   def withdraw(amount)
+    @account || raise("You need to call authenticate_as first!")
     @account.debit(amount)
     @cash_dispenser.dispense(amount)
   end

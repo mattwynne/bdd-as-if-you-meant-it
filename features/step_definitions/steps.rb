@@ -1,5 +1,5 @@
 AMOUNT = Transform /\$(\d+)/ do |raw_amount|
-  raw_amount.to_i
+  Money.new(raw_amount.to_i)
 end
 
 Given /^I have (#{AMOUNT}) in my account$/ do |amount|

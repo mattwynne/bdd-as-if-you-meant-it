@@ -16,8 +16,8 @@ module DomainDriver
   end
 
   def withdraw(amount)
-    teller.authenticate_as(my_account)
-    teller.withdraw(amount)
+    otto.authenticate_as(my_account)
+    otto.withdraw(amount)
   end
 
   def cash_dispenser
@@ -30,8 +30,8 @@ module DomainDriver
 
   private
 
-  def teller
-    @teller ||= Teller.new(cash_dispenser)
+  def otto
+    @otto ||= Otto.new(cash_dispenser)
   end
 end
 
