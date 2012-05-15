@@ -5,7 +5,13 @@ Source code for the tutorial used in Matt's __BDD as if you meant it__ session a
 
 ## Getting started
 
-This codebase is just a stub to get you going. Before you do anything, make sure you have [installed Ruby](http://www.ruby-lang.org/en/downloads/) (1.9.3 is recommended).
+This codebase is just a stub to get you ready to start the tutorial. Here are the steps you need to take:
+
+Before you do anything, make sure you have installed Ruby. Follow the instructions for your chosen platform at http://www.ruby-lang.org/en/downloads (1.9.3 is recommended).
+
+Now install [bundler](http://gembundler.com/):
+
+    gem install bundler
 
 Clone this repository:
 
