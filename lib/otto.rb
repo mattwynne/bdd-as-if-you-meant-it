@@ -12,8 +12,6 @@ class Money
     @amount == other_money.amount
   end
 
-  protected
-
   attr_reader :amount
 end
 
@@ -48,5 +46,24 @@ end
 require 'sinatra'
 
 get '/' do
-  'Moi, olen Otto'
+%{
+  <html>
+    <body>
+      <p>
+        Moi, olen Otto
+      </p>
+      <form action="/withdraw" method="POST">
+        <label for="amount">Amount</label><br/>
+        <input type="text" name="amount" id="amount"/><br/>
+        <input type="submit" value="Withdraw"/>
+      </form>
+    </body>
+  </html>
+}
+end
+
+post '/withdraw' do
+  otto = Otto.new(settings.cash_dispenser)
+  otto.authenticate_as(settings.account)
+  otto.withdraw(Money.new(params[:amount].to_i))
 end
