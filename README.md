@@ -19,7 +19,7 @@ Ask bundler to install the neccesary Ruby gems:
 
     bundle
 
-We'll use [Guard] to run our tests continuously. Fire it up like this:
+We'll use [Guard](https://github.com/guard/guard/) to run our tests continuously. Fire it up like this:
 
     bundle exec guard
 
