@@ -1,28 +1,32 @@
-Given /^I have \$(\d+) in my account$/ do |amount|
+AMOUNT = Transform /\$(\d+)/ do |raw_amount|
+  raw_amount.to_i
+end
+
+Given /^I have (#{AMOUNT}) in my account$/ do |amount|
   create_account(amount)
 end
 
-When /^I withdraw \$(\d+)$/ do |amount|
+When /^I withdraw (#{AMOUNT})$/ do |amount|
   withdraw(amount)
 end
 
-Then /^\$(\d+) should be dispensed$/ do |amount|
+Then /^(#{AMOUNT}) should be dispensed$/ do |amount|
   cash_dispenser.contents.should == amount
 end
 
-Then /^the balance of my account should be \$(\d+)$/ do |amount|
+Then /^the balance of my account should be (#{AMOUNT})$/ do |amount|
   my_account.balance.should == amount
 end
 
 class CashDispenser
   def contents
-    "50"
+    50
   end
 end
 
 class Account
   def balance
-    "450"
+    450
   end
 end
 
